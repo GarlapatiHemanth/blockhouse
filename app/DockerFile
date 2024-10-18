@@ -15,6 +15,9 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+RUN pwd
+RUN ls
+
 # Copy the requirements file into the container
 COPY app/requirements.txt /app/
 
@@ -23,11 +26,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application code into the container
 COPY . /app/
-
-
-
-RUN pwd
-RUN ls
 
 # Expose the port the app runs on
 EXPOSE 8000
