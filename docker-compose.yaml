@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .  # This points to the directory containing your Dockerfile
+      dockerfile: ./app/DockerFile  # This explicitly points to the Dockerfile in the context directory
+    container_name: django_app
+    environment:
+      - DJANGO_CONFIGURATION=${DJANGO_CONFIGURATION:-Prod}  # Use a default value if not set
+      - DJANGO_SETTINGS_MODULE=project_name.settings
+    ports:
+      - "8000:8000"
+    volumes:
+      
+      - .:/app  # Mount the project directory to /app/project in the container
+    command: >
+      sh -c "gunicorn --bind 0.0.0.0:8000 project_name.wsgi:application "
+
+networks:
+  default:
+    driver: bridge
