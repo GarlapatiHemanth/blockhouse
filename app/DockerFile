@@ -4,7 +4,8 @@ FROM python:3.11-slim
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV DJANGO_CONFIGURATION=Dev 
+ENV DJANGO_CONFIGURATION=Prod
+ENV DJANGO_SETTINGS_MODULE=project_name.settings
 
 # Set the working directory in the container
 WORKDIR /app
