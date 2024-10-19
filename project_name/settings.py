@@ -42,8 +42,8 @@ class Base(Configuration):
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'app',
-    'exam'
+    'app'
+    
 ]
 
     MIDDLEWARE = [
