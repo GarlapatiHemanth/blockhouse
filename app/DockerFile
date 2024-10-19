@@ -29,4 +29,4 @@ COPY . /app/
 EXPOSE 8000
 
 # Start the application using Gunicorn with dynamic configuration
-CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:8000 project_name.wsgi:application"]
+CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:8000 ../project_name.wsgi:application"]
