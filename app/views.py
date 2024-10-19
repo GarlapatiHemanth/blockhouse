@@ -18,7 +18,8 @@ def fetch_data(request):
 
         return Response(stockPricesDataSerializers(data,many=True).data)
     except Exception as e:
-        return Response(e)
+        print(e)
+        return Response("Internal server error",status=400)
 
 @api_view(['POST'])
 def run_backtest(request):
@@ -33,11 +34,16 @@ def run_backtest(request):
     
 @api_view(['GET'])
 def predict_stock_prices(request):
-    symbol=request.GET.get('symbol')
-    if not symbol:
-        return Response("Symbol is required",400)
-    predictions = predict_next_30_days_and_store(symbol.upper())
-    return Response(predictions.to_dict(orient='records'))
+
+    try:
+        symbol=request.GET.get('symbol')
+        if not symbol:
+            return Response("Symbol is required",400)
+        predictions = predict_next_30_days_and_store(symbol.upper())
+        return Response(predictions.to_dict(orient='records'))
+    except Exception as e:
+        print(e)
+        return Response("Internal Error Occured", status=400)
 
 @api_view(['GET'])
 def report(request):
@@ -58,18 +64,10 @@ def report(request):
         else:  
             return Response(generate_report(symbol.upper(),initialInvestment)[0])
     except Exception as e:
-        return Response(e)
+        print(e)
+        return Response('Internal Server Error',status=400)
     
 
-@api_view(['GET'])  
-def api(request):
-    data=( (requests.get("https://www.alphavantage.co/query", {
-            "function":  'TIME_SERIES_DAILY',
-            "symbol": 'IBM',
-            "apikey": 'YIVS7RKO2TRR3PPJ',
-            "outputsize": 'full'
-        })).json())
-    return Response(data)
 
     
    
